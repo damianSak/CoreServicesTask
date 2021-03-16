@@ -5,9 +5,7 @@ import bootcamp_task.utils.ConsoleInputProvider;
 import bootcamp_task.utils.Messages;
 import bootcamp_task.utils.StringUtils;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DeleteVoices {
@@ -21,16 +19,6 @@ public class DeleteVoices {
     private boolean isSongAlreadyInCollectionValidation(List<Song> songs, String title, String author) {
         return songs.stream().anyMatch(h -> h.getTitle().equals(title) &&
                 h.getAuthor().equals(author));
-    }
-
-    private int songsTitleCounter(String title, List<Song> songs) {
-        Set<Song> songsWithChosedTitle = new HashSet<>();
-        for (Song song : songs) {
-            if (song.getTitle().equals(title)) {
-                songsWithChosedTitle.add(song);
-            }
-        }
-        return songsWithChosedTitle.size();
     }
 
     private List<Song> songsSubListBytitle(String title, List<Song> songs) {
@@ -94,7 +82,7 @@ public class DeleteVoices {
 
             }
 
-            Messages.showEndingChooseMessage("usunąć głosy innemu utworowi, wszystkim utworom");
+            Messages.showEndingChooseMessage("usunąć głosy innemu utworowi, wszystkim utworom","głównego MENU:");
 
             userChoice = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
         }

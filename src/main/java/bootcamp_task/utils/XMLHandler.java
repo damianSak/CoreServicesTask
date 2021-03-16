@@ -24,52 +24,7 @@ import java.util.List;
 
 public class XMLHandler {
 
-    String file = "D:\\test\\songsXML.xml";
-
-//    public List<Song> readXMLFile(String fileName) {
-//
-//        List<Song> loadedList = new ArrayList<>();
-//        try {
-//            File fXmlFile = new File(fileName);
-//            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-//            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-//            Document doc = dBuilder.parse(fXmlFile);
-//
-//            //optional, but recommended
-//            //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
-//            doc.getDocumentElement().normalize();
-//
-//            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-//
-//            NodeList nList = doc.getElementsByTagName("song");
-//
-//            System.out.println("----------------------------");
-//
-//            for (int temp = 0; temp < nList.getLength(); temp++) {
-//
-//                Node nNode = nList.item(temp);
-//
-//                System.out.println("\nCurrent Element :" + nNode.getNodeName());
-//
-//                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-//
-//                    Element eElement = (Element) nNode;
-//
-//                    System.out.println("Song title : " + eElement.getElementsByTagName("title").item(0).getTextContent());
-//                    System.out.println("Song author : " + eElement.getElementsByTagName("author").item(0).getTextContent());
-//                    System.out.println("Song album : " + eElement.getElementsByTagName("album").item(0).getTextContent());
-//                    System.out.println("Song category : " + eElement.getElementsByTagName("category").item(0).getTextContent());
-//                    System.out.println("Song votes : " + eElement.getElementsByTagName("votes").item(0).getTextContent());
-//
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return loadedList;
-//    }
-
-    public static void saveXMLFile(List<Song> songsList,File createdFile) {
+    static void saveXMLToFile(List<Song> songsList, File createdFile) {
 
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -109,7 +64,7 @@ public class XMLHandler {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty("omit-xml-declaration", "yes");
 
-            transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 
             transformer.setOutputProperty(
                     "{http://xml.apache.org/xslt}indent-amount", "4");
@@ -122,14 +77,12 @@ public class XMLHandler {
             transformer.transform(source, result);
 
 
-        } catch (ParserConfigurationException pce) {
+        } catch (ParserConfigurationException | TransformerException pce) {
             pce.printStackTrace();
-        } catch (TransformerException tfe) {
-            tfe.printStackTrace();
         }
     }
 
-     public List<Song> parseXMLToList(File fileName) {
+     public static List<Song> parseXMLFileToList(File fileName) {
 
         //Get Document Builder
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -145,13 +98,11 @@ public class XMLHandler {
         Document document = null;
         try {
             document = builder.parse(fileName);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
 
-        List<Song> loadedSongs = new ArrayList<>();
+         List<Song> loadedSongs = new ArrayList<>();
         NodeList nodeList = document.getDocumentElement().getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
@@ -175,10 +126,10 @@ public class XMLHandler {
                 String category = elem.getElementsByTagName("category")
                         .item(0).getChildNodes().item(0).getNodeValue();
 
-                Integer votes = Integer.parseInt(elem.getElementsByTagName("votes")
+                int votes = Integer.parseInt(elem.getElementsByTagName("votes")
                         .item(0).getChildNodes().item(0).getNodeValue());
 
-                loadedSongs.add(new Song(title, author, album, Genre.valueOf(category), votes));
+                loadedSongs.add(new Song(title, author, album, Genre.findByName(category), votes));
             }
         }
 

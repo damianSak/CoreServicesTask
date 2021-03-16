@@ -3,12 +3,11 @@ package bootcamp_task;
 import bootcamp_task.actions.*;
 import bootcamp_task.model.Song;
 import bootcamp_task.utils.ConsoleInputProvider;
-import bootcamp_task.actions.LoadSongsList;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SongsCollection {
+class SongsCollection {
 
     private List<Song> songs;
 
@@ -19,11 +18,11 @@ public class SongsCollection {
     private PrintCategoryRaport printCategoryRaport;
     private LoadSongsList loadSongsList;
 
-    public SongsCollection() {
+    SongsCollection() {
         this(new ArrayList<>());
     }
 
-    public SongsCollection(List<Song> songs) {
+    private SongsCollection(List<Song> songs) {
         initializeActions(songs);
     }
 
@@ -38,8 +37,7 @@ public class SongsCollection {
         this.loadSongsList = new LoadSongsList();
     }
 
-    public void start() {
-//        loadCollectionsFromFile();
+    void start() {
 
         int number;
         do {
@@ -70,10 +68,8 @@ public class SongsCollection {
                 default:
                     System.out.println("To nie jest poprawnie wybrana opcja z MENU, wybierz właściwą cyfrę: ");
             }
-
-        } while (true);
+        } while (number!=7);
     }
-
 
     private void welcomeMenu() {
         System.out.println("\nObsługa menu głównego i wewnętrznych poprzez wybranie odpowiednich cyfr");
@@ -109,11 +105,12 @@ public class SongsCollection {
         this.printCategoryRaport.printRaportByCategory(songs);
     }
 
-    private void loadCollection(){
+    private void loadCollection() {
         this.songs = this.loadSongsList.loadListFromFile(songs);
     }
 
     private void endProgramm() {
+        ConsoleInputProvider.closeScanner();
         System.exit(0);
     }
 

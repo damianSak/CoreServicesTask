@@ -23,6 +23,7 @@ public class PrintRankRaport {
 
         int userChoiceFromMenu;
         String userChoice;
+        List<Song> listToSave;
 
         do {
             System.out.println("-------------------------------------");
@@ -35,29 +36,29 @@ public class PrintRankRaport {
             userChoiceFromMenu = ConsoleInputProvider.readIntFromUserHandlingEmptyInput();
             switch (userChoiceFromMenu) {
                 case 1:
-                    printSongsOnConsole(10, songs);
+                    listToSave = printSongsOnConsole(10, songs);
                     System.out.println("\n Wprowadź 'T/t' jeśli chcesz zapisać listę do pliku");
                     userChoice = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
                     if(userChoice.toLowerCase().equals("t")){
-                        SaveRaport.saveDbToFile();
+                        SaveRaport.saveDbToFile(listToSave);
                     }
                     break;
 
                 case 2:
-                    printSongsOnConsole(3, songs);
+                    listToSave = printSongsOnConsole(3, songs);
                     System.out.println("\n Wprowadź 'T/t' jeśli chcesz zapisać listę do pliku");
                     userChoice = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
                     if(userChoice.toLowerCase().equals("t")){
-                        SaveRaport.saveDbToFile();
+                        SaveRaport.saveDbToFile(listToSave);
                     }
                     break;
 
                 case 3:
-                    printSongsOnConsole(songs.size(), songs);
+                    listToSave = printSongsOnConsole(songs.size(), songs);
                     System.out.println("\n Wprowadź 'T/t' jeśli chcesz zapisać listę do pliku");
                     userChoice = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
                     if(userChoice.toLowerCase().equals("t")){
-                        SaveRaport.saveDbToFile();
+                        SaveRaport.saveDbToFile(listToSave);
                     }
                     break;
 
@@ -65,7 +66,7 @@ public class PrintRankRaport {
                     System.out.println("\nNie wybrano poprawnej liczby z MENU\n");
             }
 
-            Messages.showEndingChooseMessage("aby wyświetlić listę wg innych kryteriów");
+            Messages.showEndingChooseMessage("aby wyświetlić listę wg innych kryteriów","głównego MENU:");
 
             userChoice = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
         }
@@ -76,11 +77,13 @@ public class PrintRankRaport {
         return songs.stream().sorted(Comparator.comparing(Song::getVote).reversed()).collect(Collectors.toList());
     }
 
-    private void printSongsOnConsole(int numberOfRecordsToShow, List<Song> songs) {
+    private List<Song> printSongsOnConsole(int numberOfRecordsToShow, List<Song> songs) {
         List<Song> sortedSongsList = sortSongsByVotes(songs);
         StringUtils.printHeading();
+        List<Song> listToSave = new ArrayList<>();
         try {
             for (int i = 0; i < numberOfRecordsToShow; i++) {
+                listToSave.add(sortedSongsList.get(i));
                 Song tempSong = sortedSongsList.get(i);
                 StringUtils.printSingleRecord(tempSong.getTitle(), tempSong.getAuthor(), tempSong.getAlbum(), tempSong.getCategory(), tempSong.getVote());
             }
@@ -88,6 +91,7 @@ public class PrintRankRaport {
             System.out.println("\n-------------------------------------------> Brak większej ilości utworów do wyświetlenia z listy <--------------------------------------------\n");
         }
         StringUtils.printEnding();
+        return listToSave;
     }
 
     private List<Song> createTopListByVotes(List<Song> songs, int numberOfPositionToShow) {

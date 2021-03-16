@@ -21,16 +21,6 @@ public class AddVoice {
                 h.getAuthor().equals(author));
     }
 
-//    private int songsTitleCounter(String title, List<Song> songs) {
-//        List<Song> songsWithChosedTitle = new ArrayList<>();
-//        for (Song song : songs) {
-//            if (song.getTitle().equals(title)) {
-//                songsWithChosedTitle.add(song);
-//            }
-//        }
-//        return songsWithChosedTitle.size();
-//    }
-
     private List<Song> songsSubListBytitle (String title, List<Song>songs){
         return songs.stream().filter(h->h.getTitle().equals(title)).collect(Collectors.toList());
     }
@@ -82,7 +72,7 @@ public class AddVoice {
             }else{
                 System.out.println("Brak piosenki o podanym tytule lub błąd pisowni \n");
             }
-            Messages.showEndingChooseMessage("dodać ponownie głosy dla piosenki");
+            Messages.showEndingChooseMessage("dodać ponownie głosy dla piosenki","głównego MENU:");
             userChoice = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
         }
         while (userChoice.toLowerCase().equals("t"));

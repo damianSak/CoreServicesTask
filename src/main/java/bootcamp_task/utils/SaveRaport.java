@@ -43,16 +43,16 @@ public class SaveRaport {
                         }
                     } while (createdFile.exists());
 
-                    XMLHandler.saveXMLFile(songsToSave, createdFile);
+                    XMLHandler.saveXMLToFile(songsToSave, createdFile);
                     System.out.println("Utworzono nową bazę danych o nazwię " + "' " + fileName + " '");
                     break;
                 default:
                     System.out.println("Nie wybrano właściwego formatu pliku do zapisu lub błąd pisowni");
-                    Messages.showEndingChooseMessage("wprowadzić właściwą opcję do zapisu");
-            }
-            userChoice = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
-        } while (!userChoice.toLowerCase().equals("n"));
-    }
 
+            }
+            Messages.showEndingChooseMessage("spróbować zapisać listę jeszcze raz","poprzedniego MENU: ");
+            userChoice = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
+        } while (userChoice.toLowerCase().equals("t"));
+    }
 
 }

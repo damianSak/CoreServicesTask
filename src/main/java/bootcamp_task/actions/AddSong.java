@@ -63,7 +63,7 @@ public class AddSong {
             } else {
                 System.out.println("\nWprowadzona piosenka z podanym wykonawcą już istnieje na tej liście \n");
             }
-            Messages.showEndingChooseMessage("dodać kolejną nową pozycję");
+            Messages.showEndingChooseMessage("dodać kolejną nową pozycję", "głównego MENU:");
             userChoice = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
         }
         while (userChoice.toLowerCase().equals("t"));

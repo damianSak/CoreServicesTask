@@ -4,11 +4,12 @@ import bootcamp_task.model.Genre;
 import bootcamp_task.model.Song;
 import bootcamp_task.utils.ConsoleInputProvider;
 import bootcamp_task.utils.Messages;
+import bootcamp_task.utils.SaveRaport;
 import bootcamp_task.utils.StringUtils;
 
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PrintCategoryRaport {
 
@@ -22,53 +23,48 @@ public class PrintCategoryRaport {
 
         String userChoiceFromMenu;
         String userChoice;
-        Set<Genre> genreSet = createGenreSet(songs);
+        List<Song> listToSave;
 
         do {
             int numberList = 1;
 
             System.out.println("-------------------------------------");
 
-            for (Genre genre : genreSet) {
+            for (Genre genre : Genre.values()) {
                 System.out.println(numberList++ + ". " + genre);
             }
             System.out.println("-------------------------------------");
             System.out.println("Wpisz nazwę gatunku, dla którego utwory mają być wyświetlone:");
 
             userChoiceFromMenu = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
-           if(isGenreInCollectionValidation(genreSet,userChoiceFromMenu)){
 
-               printSongsOnConsole(Genre.valueOf(userChoiceFromMenu),songs);
+           if(isGenreInCollectionValidation(songs,userChoiceFromMenu)){
+
+               listToSave=sortSongsByVotesAndGenre(songs,userChoiceFromMenu);
+               StringUtils.printSongsCollectionOnConsole(listToSave);
+               System.out.println("\n Wprowadź 'T/t' jeśli chcesz zapisać listę do pliku");
+               userChoice = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
+               if(userChoice.toLowerCase().equals("t")){
+                   SaveRaport.saveDbToFile(listToSave);
+               }
 
            }else{
                System.out.println("Nie wybrano właściwej nazwy z listy gatunków");
            }
 
-            Messages.showEndingChooseMessage("aby wyświetlić listę utworów dla innej kategori");
+            Messages.showEndingChooseMessage("aby wyświetlić listę utworów dla innej kategori","głównego MENU:");
 
             userChoice = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
         }
         while (userChoice.toLowerCase().equals("t"));
     }
 
-    private void printSongsOnConsole(Genre genreToShow, List<Song> songs) {
-        StringUtils.printHeading();
-        for (Song song : songs) {
-            if (song.getCategory()..equals(genreToShow))
-                StringUtils.printSingleRecord(song.getTitle(), song.getAuthor(), song.getAlbum(), song.getCategory(), song.getVote());
-        }
-        StringUtils.printEnding();
+    private boolean isGenreInCollectionValidation(List<Song>songs, String genreName) {
+        return songs.stream().anyMatch(h -> h.getCategory().equals(Genre.findByName(genreName)));
     }
 
-    private Set<Genre> createGenreSet(List<Song> songs) {
-        Set<Genre> genreSet = new HashSet<>();
-        for (Song song : songs) {
-            genreSet.add(song.getCategory());
-        }
-        return genreSet;
-    }
-
-    private boolean isGenreInCollectionValidation(Set<Genre> genreSet, String genreName) {
-        return genreSet.stream().anyMatch(h -> h.equals(genreName));
+    private List<Song> sortSongsByVotesAndGenre(List<Song> songs,String genreName) {
+        return songs.stream().filter(h -> h.getCategory().equals(Genre.findByName(genreName)))
+                .sorted(Comparator.comparing(Song::getVote).reversed()).collect(Collectors.toList());
     }
 }

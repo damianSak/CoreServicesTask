@@ -1,10 +1,7 @@
 package bootcamp_task.actions;
 
 import bootcamp_task.model.Song;
-import bootcamp_task.utils.CSVHandler;
-import bootcamp_task.utils.ConsoleInputProvider;
-import bootcamp_task.utils.Messages;
-import bootcamp_task.utils.XMLHandler;
+import bootcamp_task.utils.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,12 +9,7 @@ import java.util.List;
 
 public class LoadSongsList {
 
-    CSVHandler csvHandler = new CSVHandler();
-    XMLHandler xmlHandler = new XMLHandler();
-
-    private String dbPath = "D:\\test\\";
-
-    void createDBFolder(File file) {
+    private void createDBFolder(File file) {
         if (!file.exists()) {
             file.mkdirs();
         }
@@ -26,12 +18,12 @@ public class LoadSongsList {
     public List<Song> loadListFromFile(List<Song> songsInMemory) {
 
         List<Song> songsFromFile = new ArrayList<>();
-        List<Song> songsAfterComparison = new ArrayList<>();
+        List<Song> songsAfterComparison;
         File file;
         String userChoice;
         String fileExtension;
 
-        createDBFolder(new File(dbPath));
+        createDBFolder(new File(StringUtils.selectDbPatch()));
 
         do {
             System.out.println("Podaj czy plik do wczystania jest w formacie -> CSV <-   lub  -> XML <- :");
@@ -47,10 +39,10 @@ public class LoadSongsList {
 
                         do {
                             String fileName = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
-                            file = new File(dbPath + "\\" + fileName + ".txt");
+                            file = new File(StringUtils.selectDbPatch() + "\\" + fileName + ".txt");
                             if (file.exists()) {
                                 try {
-                                    songsFromFile = csvHandler.readCSVFromList(file);
+                                    songsFromFile = CSVHandler.readCSVFromList(file);
                                 } catch (RuntimeException e) {
                                     System.out.println("Niepoprawny format danych wewnątrz pliku, brak możliwości otworzenia");
                                 }
@@ -72,10 +64,10 @@ public class LoadSongsList {
 
                         do {
                             String dbName = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
-                            file = new File(dbPath + "\\" + dbName + ".xml");
+                            file = new File(StringUtils.selectDbPatch() + "\\" + dbName + ".xml");
                             if (file.exists()) {
                                 try {
-                                    songsFromFile = xmlHandler.parseXMLToList(file);
+                                    songsFromFile = XMLHandler.parseXMLFileToList(file);
                                 } catch (Exception t) {
                                     System.out.println("Niepoprawny format danych wewnątrz pliku, brak możliwości otworzenia");
                                 }
@@ -93,7 +85,7 @@ public class LoadSongsList {
             }
             songsAfterComparison = compareSongsFromFileWihSongsInMemory(songsInMemory, songsFromFile);
 
-            Messages.showEndingChooseMessage("spróbować znaleźć plik z innym rozszerzeniem");
+            Messages.showEndingChooseMessage("spróbować znaleźć plik z innym rozszerzeniem","głównego MENU:");
 
             userChoice = ConsoleInputProvider.readStringFromUserHandlingEmptyInput();
         }
@@ -104,14 +96,14 @@ public class LoadSongsList {
     }
 
     private File[] loadCustomFilesFromFolder(String filetype) {
-        File file = new File(dbPath);
+        File file = new File(StringUtils.selectDbPatch());
         return file.listFiles((file1, name) -> name.endsWith(filetype));
     }
 
     private void showCustomFiles(String filetype) {
         File[] files = loadCustomFilesFromFolder(filetype);
-        for (int i = 0; i < files.length; i++) {
-            System.out.println(files[i]);
+        for (File file : files) {
+            System.out.println(file);
         }
     }
 
@@ -123,7 +115,7 @@ public class LoadSongsList {
         return isAnyfileCorrect;
     }
 
-    public List<Song> compareSongsFromFileWihSongsInMemory(List<Song> songsInMemory, List<Song> songsFromFile) {
+    private List<Song> compareSongsFromFileWihSongsInMemory(List<Song> songsInMemory, List<Song> songsFromFile) {
 
         int numberOfLoops = songsInMemory.size();
 

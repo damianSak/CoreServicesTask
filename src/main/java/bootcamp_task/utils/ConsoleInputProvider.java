@@ -1,23 +1,11 @@
 package bootcamp_task.utils;
 
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleInputProvider {
 
-    static Scanner scanner = new Scanner(System.in);
-
-
-    public static void waitForPresedEnter() {
-
-        System.out.println("\nWybrana operacja została zakończona, wciśnij ENTER aby powrócić do głównego MENU");
-        try {
-            int read = System.in.read(new byte[2]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    private static Scanner scanner = new Scanner(System.in);
 
     public static int readIntFromUserHandlingEmptyInput() {
         int number = 0;

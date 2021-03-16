@@ -9,28 +9,13 @@ import java.util.Locale;
 
 public class StringUtils {
 
-    /**
-     * by putting as a char end of the line ('c = \n' ) you
-     * can count how many end of lines are in choosed string;
-     */
-
-    public static int countChar(String str, char c) {
-        int count = 0;
-
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) == c)
-                count++;
-        }
-        return count;
-    }
-
     public static void printSingleRecord(String title, String author, String album, Genre category, int votes) {
         System.out.format(Locale.GERMAN, "%-25s|%-25s|%-42s| %-20s| %-16d\n",
                 title, author, album, category,votes);
 
     }
     public static String selectDbPatch(){
-        return "D:\\Album DB\\";
+        return "D:\\test\\";
     }
 
     public static void printHeading() {
