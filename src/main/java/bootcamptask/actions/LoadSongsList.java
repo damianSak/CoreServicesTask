@@ -42,8 +42,7 @@ public class LoadSongsList {
             }
             songsAfterComparison = compareSongsFromFileWihSongsInMemory(songs, songsFromFile);
 
-            Messages.showUserChooseMessage("WCZYTAĆ inny plik, spróbować znaleźć plik z innym " +
-                    "rozszerzeniem", " wrócić do głównego MENU:");
+            Messages.showUserChooseMessage("WCZYTAĆ inny plik , ", " wrócić do głównego MENU:");
 
             userChoice = inputProvider.provideStringHandlingEmptyInput();
         }
@@ -101,11 +100,13 @@ public class LoadSongsList {
             fileExtension=".xml";
         }
         if (checkIfAnyfileFits(fileExtension)) {
-            System.out.println("\nZawartość katalogu z plikami:\n");
-            showCustomFiles(fileExtension);
-            System.out.println("\nPodaj plik do wczytania (bez rozszerzenia):");
+
             File file;
+            String userChoiceWithFile="";
             do {
+                System.out.println("\nZawartość katalogu z plikami:\n");
+                showCustomFiles(fileExtension);
+                System.out.println("\nPodaj plik do wczytania (bez rozszerzenia):");
                 String fileName = inputProvider.provideStringHandlingEmptyInput();
                 file = new File(SongsCollection.ORIGIN_PATH + "\\" + fileName + fileExtension);
                 if (file.exists()) {
@@ -116,12 +117,15 @@ public class LoadSongsList {
                             songsFromFile = XMLHandler.parseXMLFileToList(file);
                         }
                     } catch (Exception e) {
-                        System.out.println("Niepoprawny format danych wewnątrz pliku, brak możliwości otworzenia");
+                        System.out.println("Niepoprawny format danych wewnątrz pliku, brak możliwości wczytania elementów do pamięci");
                     }
                 } else {
                     System.out.println("Niepoprawna nazwa pliku do odczytu, podaj właściwą nazwę (bez rozszerzenia):");
+                    Messages.showUserChooseMessage("WPISAĆ właściwą nazwę", "wrócić do poprzedniego MENU:");
+                    userChoiceWithFile = inputProvider.provideStringHandlingEmptyInput();
                 }
-            } while (!file.exists());
+
+            } while (userChoiceWithFile.toLowerCase().equals("t"));
         } else {
             System.out.println("Brak plików o podanym rozszerzeniu w folderze");
         }

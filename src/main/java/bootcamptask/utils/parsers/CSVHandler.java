@@ -34,11 +34,13 @@ public class CSVHandler {
             System.out.println("Wczytano utwory:");
             songsSet.forEach((Song) -> System.out.println(Song.toString()));
 
-            System.out.println("\nDo pamięci nie wczytano danych utworu z powodu " +
-                    "braku danych dla co najmniej jednego pola lub niewłaściwego gatunku muzycznego:");
-            beans.getCapturedExceptions().forEach((exception) -> System.out.println("Linia : " + exception.getLineNumber()
-                    + " ,obecne wartości: " + Arrays.toString(exception.getLine())));
+            if(beans.getCapturedExceptions().size()>0) {
 
+                System.out.println("\nDo pamięci nie wczytano danych utworu z powodu " +
+                        "braku danych dla co najmniej jednego pola lub niewłaściwego gatunku muzycznego:");
+                beans.getCapturedExceptions().forEach((exception) -> System.out.println("Linia : " + exception.getLineNumber()
+                        + " ,obecne wartości: " + Arrays.toString(exception.getLine())));
+            }
             System.out.println("\nPomyślnie wczytano elementy z pliku do pamięci programu");
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -143,6 +143,9 @@ public class XMLHandler {
             }
         }
 
+        System.out.println("Wczytano utwory:");
+        loadedSongs.forEach((Song) -> System.out.println(Song.toString()));
+
         System.out.println("\n Pomyślnie wczytano elementy z pliku do pamięci programu");
 
         return loadedSongs;

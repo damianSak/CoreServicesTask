@@ -48,14 +48,19 @@ public class AddSong {
                     System.out.println(" \nBrak kategorii muzycznej dla gatunku '" + categoryString +
                             "', podany utwór nie zostanie dodany do listy \n");
                 } else {
-                    addNewSongToCollection(songs, title, author, album, genreFromString);
-                    System.out.println("Dodano piosenkę do kolekcji: ");
                     PrintUtils.printHeading();
                     PrintUtils.printSingleRecord(title, author, album, genreFromString, 0);
                     PrintUtils.printEnding();
+                    System.out.println("\nCzy na pewno dodać utwór do listy elementów w pamięci ?");
+                    Messages.showUserChooseMessage("DODAĆ utwór do listy", "ANULOWAĆ dodanie:");
+                    userChoice = inputProvider.provideStringHandlingEmptyInput();
+                    if (userChoice.toLowerCase().equals("t")) {
+                        addNewSongToCollection(songs, title, author, album, genreFromString);
+                        System.out.println("Dodano utwór do kolekcji: ");
+                    }
                 }
             } else {
-                System.out.println("\nWprowadzona piosenka z podanym wykonawcą już istnieje na tej liście \n");
+                System.out.println("\nWprowadzony utwór z podanym wykonawcą już istnieje na tej liście \n");
             }
             Messages.showUserChooseMessage("DODAĆ KOLEJNĄ nową pozycję", "wrócić do głównego MENU:");
             userChoice = inputProvider.provideStringHandlingEmptyInput();

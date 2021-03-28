@@ -1,7 +1,5 @@
 package bootcamptask.utils.stringhandlers;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -27,7 +25,7 @@ public class ConsoleInputProvider implements InputProvider {
     public String provideStringHandlingEmptyInputCustomErrorMessage(String mainMessage, String exceptionMessage) {
         String string;
         do {
-            if (!StringUtils.isEmpty(mainMessage)) {
+            if (mainMessage != null && !mainMessage.isEmpty()) {
                 System.out.println(mainMessage);
             }
             string = scanner.nextLine().trim();
@@ -37,7 +35,6 @@ public class ConsoleInputProvider implements InputProvider {
         } while (string.isEmpty());
         return string;
     }
-
 
     @Override
     public int provideIntHandlingEmptyInput() {

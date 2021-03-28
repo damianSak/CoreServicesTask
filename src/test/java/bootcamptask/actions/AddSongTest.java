@@ -42,7 +42,7 @@ class AddSongTest {
         //given
 
         when(inputProvider.provideStringHandlingEmptyInputCustomErrorMessage(any(), any())).thenReturn(TITLE, AUTHOR, ALBUM, GENRE);
-        when(inputProvider.provideStringHandlingEmptyInput()).thenReturn("n");
+        when(inputProvider.provideStringHandlingEmptyInput()).thenReturn("t","n");
 
         //when
         testObject.addNewSongToCollection();

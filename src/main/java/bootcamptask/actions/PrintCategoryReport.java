@@ -39,7 +39,7 @@ public class PrintCategoryReport {
                 if (SongValidator.isGenreInCollectionValidation(songs, userChoiceFromMenu)) {
                     listToSave = ListHandler.sortSongsByVotesAndGenre(songs, userChoiceFromMenu);
                     PrintUtils.printSongsOnConsole(listToSave, listToSave.size());
-                    Messages.showUserChooseMessage("zapisać listę do pliku", "poprzedniegoo MENU:");
+                    Messages.showUserChooseMessage("zapisać listę do pliku", "przejść do poprzedniegoo MENU:");
                     userChoice = inputProvider.provideStringHandlingEmptyInput();
                     if (userChoice.toLowerCase().equals("t")) {
                         SaveReport.saveDbToFile(listToSave, inputProvider);

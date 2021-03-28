@@ -4,7 +4,6 @@ import com.opencsv.bean.BeanField;
 import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Custom mapping strategy used during process of saving data to CSV format - combination of ordering strategy with
@@ -43,7 +42,7 @@ public class CustomBeanToCSVMappingStrategy<T> extends ColumnPositionMappingStra
     private String extractHeaderName(final BeanField beanField) {
         if (beanField == null || beanField.getField() == null || beanField.getField()
                 .getDeclaredAnnotationsByType(CsvBindByName.class).length == 0) {
-            return StringUtils.EMPTY;
+            return "";
         }
 
         final CsvBindByName bindByNameAnnotation = beanField.getField()

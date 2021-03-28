@@ -51,9 +51,6 @@ public class DeleteVoices {
                                     deleteVoicesByTitleAndAuthor(songs, title, author);
                                     System.out.println("Usunięto wszystkie głosy dla wybranej piosenki");
                                 }
-                            } else {
-                                System.out.println("Dla podanego wykonawcy brak utowru o takim tytule lub " +
-                                        "bład pisowni przy wprowadzaniu danych");
                             }
                         } else if (ListHandler.songsSubListByTitle(title, songs).size() == 1) {
                             Messages.showUserChooseMessage("DEFINITYWNIE usunąć głosy",
@@ -63,6 +60,9 @@ public class DeleteVoices {
                                 deleteVoicesByTitle(songs, title);
                                 System.out.println("Usunięto wszystkie głosy dla wybranego utworu");
                             }
+                        }else {
+                            System.out.println("Dla podanego wykonawcy brak utowru o takim tytule lub " +
+                                    "bład pisowni przy wprowadzaniu danych");
                         }
                         break;
                     case 2:
@@ -76,7 +76,7 @@ public class DeleteVoices {
                         break;
 
                     default:
-                        System.out.println("W kolekcji nie odnaleziono utworów o podanym tytule");
+                        System.out.println("\nNie wybrano poprawnej liczby z MENU\n");
                         break;
                 }
                 Messages.showUserChooseMessage("USUNĄĆ GŁOSY innemu utworowi, wszystkim utworom",

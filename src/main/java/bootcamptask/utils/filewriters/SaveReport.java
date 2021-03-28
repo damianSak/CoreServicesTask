@@ -24,18 +24,15 @@ public class SaveReport {
                 case "CSV":
                    performSaveToFileAction(userChoice,songsToSave, inputProvider);
                     break;
-
                 case "XML":
                     performSaveToFileAction(userChoice,songsToSave, inputProvider);
                     break;
                 default:
                     System.out.println("Nie wybrano właściwego formatu pliku do zapisu lub błąd pisowni");
-
             }
             Messages.showUserChooseMessage("spróbować ZAPISAĆ listę jeszcze raz","poprzedniego MENU: ");
             userChoice = inputProvider.provideStringHandlingEmptyInput();
         } while (userChoice.toLowerCase().equals("t"));
-
     }
 
     private static void performSaveToFileAction(String userChoice, List<Song> songsToSave, InputProvider inputProvider) {
