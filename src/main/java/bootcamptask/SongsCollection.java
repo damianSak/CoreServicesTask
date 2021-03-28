@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SongsCollection {
 
-    public static final String ORIGIN_PATH = "test";
+    public static String ORIGIN_PATH;
 
     private List<Song> songs;
 
@@ -20,28 +20,29 @@ public class SongsCollection {
     private AddSong addSong;
     private AddVoice addVoice;
     private DeleteVoices deleteVoices;
-    private PrintRankRaport printRankRaport;
-    private PrintCategoryReport printCategoryRaport;
+    private PrintRankRaport printRankReport;
+    private PrintCategoryReport printCategoryReport;
     private LoadSongsList loadSongsList;
 
     private InputProvider inputProvider;
 
-    SongsCollection() {
-        this(new ConsoleInputProvider(), new ArrayList<>());
+    SongsCollection(String originPath) {
+        this(new ConsoleInputProvider(), new ArrayList<>(), originPath);
     }
 
-    private SongsCollection(InputProvider inputProvider, List<Song> songs) {
+    private SongsCollection(InputProvider inputProvider, List<Song> songs, String originPath) {
         this.songs = songs;
         this.inputProvider = inputProvider;
-        initializeActions(new ArrayList<>());
+        initializeActions(this.songs);
+        ORIGIN_PATH = originPath;
     }
 
     private void initializeActions(List<Song> songs) {
         this.addVoice = new AddVoice(songs, inputProvider);
         this.addSong = new AddSong(songs, inputProvider);
         this.deleteVoices = new DeleteVoices(songs, inputProvider);
-        this.printRankRaport = new PrintRankRaport(songs, inputProvider);
-        this.printCategoryRaport = new PrintCategoryReport(songs, inputProvider);
+        this.printRankReport = new PrintRankRaport(songs, inputProvider);
+        this.printCategoryReport = new PrintCategoryReport(songs, inputProvider);
         this.loadSongsList = new LoadSongsList(songs, inputProvider);
     }
 
@@ -105,11 +106,11 @@ public class SongsCollection {
     }
 
     private void printRankRaport() {
-        this.printRankRaport.printReportByRank();
+        this.printRankReport.printReportByRank();
     }
 
     private void printCategoryRaport() {
-        this.printCategoryRaport.printReportByCategory();
+        this.printCategoryReport.printReportByCategory();
     }
 
     private void loadCollection() {

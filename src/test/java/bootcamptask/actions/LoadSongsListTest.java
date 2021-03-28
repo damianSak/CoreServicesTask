@@ -1,5 +1,6 @@
 package bootcamptask.actions;
 
+import bootcamptask.SongsCollection;
 import bootcamptask.model.Song;
 import bootcamptask.utils.stringhandlers.InputProvider;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,13 +28,14 @@ class LoadSongsListTest {
     void initialize() {
         this.songList = new LinkedList<>();
         this.testObject = new LoadSongsList(songList, inputProvider);
+        SongsCollection.ORIGIN_PATH = "sharedResources";
     }
 
     @Test
     void loadListFromFile_should_loadSongsFromFile_when_properCSVFileGiven() {
         //given
 
-        when(inputProvider.provideStringHandlingEmptyInput()).thenReturn("CSV", "goodCSVFile","n");
+        when(inputProvider.provideStringHandlingEmptyInput()).thenReturn("CSV", "goodCSVTestFile","n");
 
         //when
         songList = testObject.loadListFromFile();
@@ -47,7 +49,7 @@ class LoadSongsListTest {
     void loadListFromFile_should_notLoadAllSongsFromFile_when_wrongSongInCSVFileGiven() {
         //given
 
-        when(inputProvider.provideStringHandlingEmptyInput()).thenReturn("CSV", "badCSVFileNoField","n");
+        when(inputProvider.provideStringHandlingEmptyInput()).thenReturn("CSV", "badCSVTestFileNoField","n");
 
         //when
         songList = testObject.loadListFromFile();
@@ -61,7 +63,7 @@ class LoadSongsListTest {
     void loadListFromFile_should_loadSongsFromFile_when_properXMLFileGiven() {
         //given
 
-        when(inputProvider.provideStringHandlingEmptyInput()).thenReturn("XML", "goodXMLFile","n");
+        when(inputProvider.provideStringHandlingEmptyInput()).thenReturn("XML", "goodXMLTestFile","n");
 
 
         //when
@@ -75,7 +77,7 @@ class LoadSongsListTest {
     @Test
     void loadListFromFile_should_notLoadSongsFromFile_when_wrongSongInXMLFileGiven() {
         //given
-        when(inputProvider.provideStringHandlingEmptyInput()).thenReturn("XML", "badXMLFileNoField","n");
+        when(inputProvider.provideStringHandlingEmptyInput()).thenReturn("XML", "badXMLTestFileNoField","n");
 
         //when
         songList = testObject.loadListFromFile();
@@ -86,7 +88,7 @@ class LoadSongsListTest {
     @Test
     void loadListFromFile_should_notAddMultiplySongsFromFile_when_goodFileTwoTimesGiven() {
         //given
-        when(inputProvider.provideStringHandlingEmptyInput()).thenReturn("XML", "goodXMLFile","t","XML", "goodXMLFile","n");
+        when(inputProvider.provideStringHandlingEmptyInput()).thenReturn("XML", "goodXMLTestFile","t","XML", "goodXMLTestFile","n");
 
         //when
         songList = testObject.loadListFromFile();
