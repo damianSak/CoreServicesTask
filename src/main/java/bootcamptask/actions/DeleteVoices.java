@@ -18,7 +18,7 @@ public class DeleteVoices {
     }
 
     public void deleteVoicesFromSongs() {
-        if (songs.size() > 0) {
+        if (!songs.isEmpty()) {
             String title;
             String author;
             int userChoiceFromMenu;

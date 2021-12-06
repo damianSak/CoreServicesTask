@@ -22,7 +22,7 @@ public class AddVoice {
         String author;
         String userChoice;
         int votes;
-        if (songs.size() > 0)
+        if (!songs.isEmpty())
             do {
                 PrintUtils.printSongsCollectionOnConsole(songs);
                 title = inputProvider.provideStringHandlingEmptyInputCustomErrorMessage("Podaj tytuł utworu, do " +

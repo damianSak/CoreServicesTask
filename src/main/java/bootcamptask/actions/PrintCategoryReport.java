@@ -23,7 +23,7 @@ public class PrintCategoryReport {
     }
 
     public void printReportByCategory() {
-        if(songs.size()>0) {
+        if(!songs.isEmpty()) {
             String userChoiceFromMenu;
             String userChoice;
             List<Song> listToSave;

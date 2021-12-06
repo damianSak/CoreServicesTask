@@ -22,7 +22,7 @@ public class PrintRankRaport {
     }
 
     public void printReportByRank() {
-        if (songs.size() > 0) {
+        if (!songs.isEmpty()) {
             int userChoiceFromMenu;
             String userChoice;
             do {

@@ -65,13 +65,13 @@ public class SongsCollection {
                     deleteVoices();
                     break;
                 case 5:
-                    printRankRaport();
+                    printRankReport();
                     break;
                 case 6:
-                    printCategoryRaport();
+                    printCategoryReport();
                     break;
                 case 7:
-                    endProgramm();
+                    endProgram();
                     break;
                 default:
                     System.out.println("To nie jest poprawnie wybrana opcja z MENU, wybierz właściwą cyfrę: ");
@@ -105,11 +105,11 @@ public class SongsCollection {
         this.deleteVoices.deleteVoicesFromSongs();
     }
 
-    private void printRankRaport() {
+    private void printRankReport() {
         this.printRankReport.printReportByRank();
     }
 
-    private void printCategoryRaport() {
+    private void printCategoryReport() {
         this.printCategoryReport.printReportByCategory();
     }
 
@@ -117,7 +117,7 @@ public class SongsCollection {
         this.songs = this.loadSongsList.loadListFromFile();
     }
 
-    private void endProgramm() {
+    private void endProgram() {
         ConsoleInputProvider.closeScanner();
         System.exit(0);
     }
